@@ -246,7 +246,7 @@ fun Rollup.rewriteAggregationBuilder(aggregationBuilder: AggregationBuilder): Ag
         }
         is AvgAggregationBuilder -> {
             ScriptedMetricAggregationBuilder(aggregationBuilder.name)
-                    .initScript(Script(ScriptType.INLINE, Script.DEFAULT_SCRIPT_LANG, "state.sums = 0; state.counts = 0;", emptyMap()))
+                    .initScript(Script(ScriptType.INLINE, Script.DEFAULT_SCRIPT_LANG, "state.sums = 0L; state.counts = 0L;", emptyMap()))
                     .mapScript(Script(ScriptType.INLINE, Script.DEFAULT_SCRIPT_LANG,
                             "state.sums += doc[\"${this.findMatchingMetricField<Average>(aggregationBuilder.field()) + ".sum"}\"].value; " +
                                     "state.counts += doc[\"${this.findMatchingMetricField<Average>(aggregationBuilder.field()) + ".value_count"}\"" +
